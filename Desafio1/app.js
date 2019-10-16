@@ -35,7 +35,7 @@ app.post('/projects', (req, res) => {
   const { id } = req.body;
   const { title } = req.body;
 
-  const project = { 
+  const project = {
     "id": id, 
     "title": title,
     "tasks": []
