@@ -4,41 +4,38 @@ const app = express();
 app.use(express.json());
 app.listen(3000);
 
-let projects = [];
-let called = 0;
+const projects = [];
+let numberOfRequests = 0;
 
 app.use((req, res, next) => {
-  called++;
-  console.log(`Called ${called} times`);
+  numberOfRequests++;
+  console.log(`Number of requests: ${numberOfRequests}`);
 
   return next();
 });
 
 function findProject(req, res, next) {
   const { id } = req.params;
-  let found = false;
+  const project = projects.find(p => p.id == id);
 
-  projects.forEach(el => {
-    if (el.id === id) {
-      found = true;
-    }
-  });
-
-  if (found) {
-    return next()
-  } else {
+  if (!project) {
     return res.status(400).json({ error: "Project with this ID doesn't exist" });
   }
+
+  return next()
 }
 
+app.get('/projects', (req, res) => {
+  return res.json(projects);
+});
+
 app.post('/projects', (req, res) => {
-  const { id } = req.body;
-  const { title } = req.body;
+  const { id, title } = req.body;
 
   const project = {
-    "id": id, 
-    "title": title,
-    "tasks": []
+    id,
+    title,
+    tasks: []
   }
 
   projects.push(project);
@@ -46,31 +43,25 @@ app.post('/projects', (req, res) => {
   return res.json(projects)
 });
 
-app.get('/projects', (req, res) => {
-  return res.json(projects);
-});
-
 app.put('/projects/:id', findProject, (req, res) => {
-  const { id } = req.params;
+  const { id, } = req.params;
   const { title } = req.body;
 
-  projects.forEach(el => {
-    if (el.id === id) {
-      el.title = title;
-      return res.json(projects);
-    }
-  });
+  const project = projects.find(p => p.id == id);
+
+  project.title = title;
+
+  return res.json(project);
 });
 
 app.delete('/projects/:id', findProject, (req, res) => {
   const { id } = req.params;
 
-  projects.forEach(el => {
-    if (el.id === id) {
-      projects.splice(projects.indexOf(el), 1);
-      return res.json(projects);
-    }
-  })
+  const pIndex = projects.findIndex(p => p.id == id);
+
+  projects.splice(pIndex, 1);
+  
+  return res.send();
 });
 
 
@@ -78,10 +69,9 @@ app.post('/projects/:id/tasks', findProject, (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
 
-  projects.forEach(el => {
-    if (el.id === id) {
-      el.tasks.push(title);
-      return res.json(projects);
-    }
-  });
+  const project = projects.find(p => p.id == id);
+
+  project.tasks.push(title);
+  
+  return res.json(project);
 });
