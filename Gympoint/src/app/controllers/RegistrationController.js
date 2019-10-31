@@ -8,15 +8,12 @@ import {
   startOfDay,
   isValid,
   addMonths,
-  format,
 } from 'date-fns';
-import pt from 'date-fns/locale/pt';
 
 import Registration from '../models/Registration';
 import Plan from '../models/Plan';
 import Student from '../models/Student';
 
-import Mail from '../../lib/Mail';
 import Queue from '../../lib/Queue';
 import CancellationMail from '../jobs/CancellationMail';
 import RegistrationMail from '../jobs/RegistrationMail';

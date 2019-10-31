@@ -61,9 +61,9 @@ class StudentController {
     }
 
     const { email } = req.body;
-    const { studentId } = req.params;
+    const { student_id } = req.params;
 
-    const student = await Student.findByPk(studentId);
+    const student = await Student.findByPk(student_id);
 
     if (!student) {
       return res.status(401).json({ error: 'Student not found' });
@@ -78,7 +78,7 @@ class StudentController {
     const { name, age, weight, height } = await student.update(req.body);
 
     return res.json({
-      studentId,
+      student_id,
       email: student.email, // Shows the user email even if no email was passed in the body
       name,
       age,
