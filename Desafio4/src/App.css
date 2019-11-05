@@ -1,0 +1,137 @@
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, em, img, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, article, footer, header, nav, section, main {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: baseline;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, ul {
+	font-size: 1em;
+	font-weight: normal;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  background: #F2F2F2;
+}
+
+/* Header */
+h1 {
+  font-size: 1.8em;
+  font-weight: bold;
+}
+
+a {
+  font-size: 15px;
+  font-weight: bold;
+	text-decoration: none;
+}
+
+a:visited {
+  color: #fff;
+}
+
+/* Header */
+.header {
+  display: flex;
+  width: 100%;
+  height: 65px;
+  background-color: #4A90E2;
+  color: #fff;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo, .right-menu {
+  padding: 10px 50px;
+}
+
+
+/* Post */
+.postContainer {
+  background-color: #fff;
+  width: 700px;
+  margin: 20px auto;
+  border-radius: 5px;
+  box-shadow: 0 0 8px #979797;
+}
+
+.postHeader {
+  padding: 15px;
+  margin: 0;
+}
+
+.avatar {
+	float: left;
+	margin-right: 10px;
+}
+
+.postContainer .avatar {
+  width: 32px;
+  height: 32px;
+}
+
+.postInfo h3 {
+  font-weight: bold;
+  font-size: 14px;
+  color: #4A4A4A;
+}
+
+.postInfo time {
+  font-size: 11px;
+  color: #9A9A9A;
+}
+
+.postContent {
+  padding-left: 15px;
+  font-size: 14px;
+  color: #3E3E3E;
+}
+
+.postContent:after {
+  content: "";
+  display: block;
+  width: 660px;
+  height: 1px;
+  background: #EEE;
+  margin: 26px 0 0 4px;
+}
+
+.postComments li:first-child {
+  padding-top: 20px;
+}
+
+.postComments li:last-child {
+  padding-bottom: 20px;
+}
+
+
+/* Comment */
+.commentContainer {
+  background-color: #fff;
+	padding: 5px  0 0 15px;
+	width: 660px;
+}
+
+.commentContainer .avatar {
+  width: 28px;
+	height: 28px;
+}
+
+.commentContent {
+  background-color: #EEE;
+  border-radius: 20px;
+	font-size: 13px;
+	color: #3E3E3E;
+	margin-left: 40px;
+	word-wrap: break-word;
+	padding: 14px 15px 10px 15px;
+}
+
+.commentAuthor {
+	font-weight: bold;
+}
