@@ -49,6 +49,13 @@ export default class Main extends Component {
         name: response.data.full_name,
       };
 
+      const repoExists =
+        repositories.findIndex(repo => repo.name === data.name) >= 0;
+
+      if (repoExists) {
+        throw new Error('Repositório duplicado');
+      }
+
       this.setState({
         repositories: [...repositories, data],
         newRepo: '',
