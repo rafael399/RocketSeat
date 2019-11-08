@@ -1,5 +1,5 @@
 {
-  "name": "modulo05",
+  "name": "Desafio5",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -41,5 +41,7 @@
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "prettier": "^1.18.2"
-  }
+  },
+  "main": "index.js",
+  "license": "MIT"
 }
