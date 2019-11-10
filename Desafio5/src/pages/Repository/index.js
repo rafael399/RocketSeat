@@ -3,7 +3,13 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import api from '../../services/api';
 
-import { Loading, Owner, IssueList, IssueSelector } from './styles';
+import {
+  Loading,
+  Owner,
+  IssueList,
+  IssueSelector,
+  PageSelector,
+} from './styles';
 import Container from '../../components/Container';
 
 export default class Repository extends Component {
@@ -25,6 +31,7 @@ export default class Repository extends Component {
       { state: 'closed', label: 'Fechadas', active: false },
     ],
     issueIndex: 0,
+    page: 1,
   };
 
   async componentDidMount() {
@@ -52,7 +59,7 @@ export default class Repository extends Component {
 
   loadIssues = async () => {
     const { match } = this.props;
-    const { issueState, issueIndex } = this.state;
+    const { issueState, issueIndex, page } = this.state;
 
     const repoName = decodeURIComponent(match.params.repository);
 
@@ -60,6 +67,7 @@ export default class Repository extends Component {
       params: {
         state: issueState[issueIndex].state,
         per_page: 5,
+        page,
       },
     });
 
@@ -71,8 +79,22 @@ export default class Repository extends Component {
     this.loadIssues();
   };
 
+  handlePage = async choice => {
+    const { page } = this.state;
+    this.setState({ page: choice === 'previous' ? page - 1 : page + 1 });
+
+    this.loadIssues();
+  };
+
   render() {
-    const { repository, issues, loading, issueState, issueIndex } = this.state;
+    const {
+      repository,
+      issues,
+      loading,
+      issueState,
+      issueIndex,
+      page,
+    } = this.state;
 
     if (loading) {
       return <Loading>Carregando</Loading>;
@@ -114,6 +136,19 @@ export default class Repository extends Component {
               </div>
             </li>
           ))}
+          <PageSelector>
+            <button
+              type="button"
+              disabled={page < 2}
+              onClick={() => this.handlePage('previous')}
+            >
+              Anterior
+            </button>
+            <span>Página {page}</span>
+            <button type="button" onClick={() => this.handlePage('next')}>
+              Próximo
+            </button>
+          </PageSelector>
         </IssueList>
       </Container>
     );

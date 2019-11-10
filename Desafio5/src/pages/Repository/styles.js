@@ -116,10 +116,40 @@ export const IssueSelector = styled.div`
     color: #fff;
     height: 30px;
     width: 100px;
-    margin: 4px;
+    margin: 0 4px;
   }
 
   .active {
     background-color: #54428f;
+  }
+`;
+
+export const PageSelector = styled.div`
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
+
+  span {
+    display: flex;
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  button {
+    font-weight: bold;
+    background-color: #7159c1;
+    border-radius: 4px;
+    color: #fff;
+    width: 100px;
+    margin: 0 4px;
+
+    &:disabled {
+      background-color: grey;
+      cursor: not-allowed;
+    }
   }
 `;
