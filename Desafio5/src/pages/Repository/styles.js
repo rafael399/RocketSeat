@@ -43,7 +43,7 @@ export const Owner = styled.div`
 `;
 
 export const IssueList = styled.ul`
-  padding-top: 30px;
+  padding-top: 10px;
   margin-top: 30px;
   border-top: 1px solid #eee;
   list-style: none;
@@ -99,5 +99,27 @@ export const IssueList = styled.ul`
         color: #999;
       }
     }
+  }
+`;
+
+export const IssueSelector = styled.div`
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  button {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    background-color: #7159c1;
+    border-radius: 4px;
+    color: #fff;
+    height: 30px;
+    width: 100px;
+    margin: 4px;
+  }
+
+  .active {
+    background-color: #54428f;
   }
 `;

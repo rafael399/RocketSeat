@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import api from '../../services/api';
 
-import { Loading, Owner, IssueList } from './styles';
+import { Loading, Owner, IssueList, IssueSelector } from './styles';
 import Container from '../../components/Container';
 
 export default class Repository extends Component {
@@ -19,10 +19,17 @@ export default class Repository extends Component {
     repository: {},
     issues: [],
     loading: true,
+    issueState: [
+      { state: 'all', label: 'Todas', active: true },
+      { state: 'open', label: 'Abertas', active: false },
+      { state: 'closed', label: 'Fechadas', active: false },
+    ],
+    issueIndex: 0,
   };
 
   async componentDidMount() {
     const { match } = this.props;
+    const { issueState } = this.state;
 
     const repoName = decodeURIComponent(match.params.repository);
 
@@ -30,7 +37,7 @@ export default class Repository extends Component {
       api.get(`/repos/${repoName}`),
       api.get(`/repos/${repoName}/issues`, {
         params: {
-          state: 'open',
+          state: issueState.find(s => s.active).state,
           per_page: 5,
         },
       }),
@@ -43,8 +50,29 @@ export default class Repository extends Component {
     });
   }
 
+  loadIssues = async () => {
+    const { match } = this.props;
+    const { issueState, issueIndex } = this.state;
+
+    const repoName = decodeURIComponent(match.params.repository);
+
+    const response = await api.get(`/repos/${repoName}/issues`, {
+      params: {
+        state: issueState[issueIndex].state,
+        per_page: 5,
+      },
+    });
+
+    this.setState({ issues: response.data });
+  };
+
+  handleStateClick = async issueIndex => {
+    await this.setState({ issueIndex });
+    this.loadIssues();
+  };
+
   render() {
-    const { repository, issues, loading } = this.state;
+    const { repository, issues, loading, issueState, issueIndex } = this.state;
 
     if (loading) {
       return <Loading>Carregando</Loading>;
@@ -60,6 +88,18 @@ export default class Repository extends Component {
         </Owner>
 
         <IssueList>
+          <IssueSelector active={issueIndex}>
+            {issueState.map((state, index) => (
+              <button
+                type="button"
+                key={state.label}
+                onClick={() => this.handleStateClick(index)}
+                className={index === issueIndex ? 'active' : ''}
+              >
+                {state.label}
+              </button>
+            ))}
+          </IssueSelector>
           {issues.map(issue => (
             <li key={String(issue.id)}>
               <img src={issue.user.avatar_url} alt={issue.user.login} />
