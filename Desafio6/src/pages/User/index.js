@@ -3,6 +3,8 @@ import { ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 import api from '../../services/api';
 
+import '../../config/ReactotronConfig';
+
 import {
   Container,
   Header,
@@ -30,17 +32,29 @@ export default class User extends Component {
 
   state = {
     stars: [],
-    loading: false,
+    loading: true,
+    page: 1,
   };
 
-  async componentDidMount() {
-    this.setState({ loading: true });
+  componentDidMount() {
+    this.loadMore();
+  }
+
+  async loadMore() {
     const { navigation } = this.props;
+    const { stars, page } = this.state;
     const user = navigation.getParam('user');
+    const nextPage = page + 1;
 
-    const response = await api.get(`/users/${user.login}/starred`);
+    const response = await api.get(`/users/${user.login}/starred`, {
+      params: { page },
+    });
 
-    this.setState({ stars: response.data, loading: false });
+    this.setState({
+      stars: page > 1 ? [...stars, ...response.data] : response.data,
+      page: nextPage,
+      loading: false,
+    });
   }
 
   render() {
@@ -61,6 +75,8 @@ export default class User extends Component {
           <ActivityIndicator color="#999" style={{ marginTop: 20 }} />
         ) : (
           <Stars
+            onEndReachedThreshold={0.2}
+            onEndReached={stars.length > 29 ? () => this.loadMore() : ''}
             data={stars}
             keyExtractor={star => String(star.id)}
             renderItem={({ item }) => (
