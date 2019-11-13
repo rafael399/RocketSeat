@@ -1,4 +1,4 @@
-package com.modulo06;
+package com.desafio6;
 
 import android.app.Application;
 import android.content.Context;
