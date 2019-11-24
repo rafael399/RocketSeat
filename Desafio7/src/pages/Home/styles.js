@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import { darken } from 'polished';
 
 export const Container = styled.View`
-  background: #191920;
+  /* background: #191920; */
 `;
 
 export const Product = styled.View`
