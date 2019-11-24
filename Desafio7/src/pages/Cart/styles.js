@@ -5,3 +5,9 @@ export const Container = styled.View`
   padding: 30px;
   background: #191920;
 `;
+
+export const Text1 = styled.Text`
+  font-size: 50px;
+
+  color: #fff;
+`;
