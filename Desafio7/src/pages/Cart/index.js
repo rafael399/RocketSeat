@@ -29,7 +29,7 @@ import {
 import * as CartActions from '../../store/modules/cart/actions';
 import { formatPrice } from '../../util/format';
 
-function Cart({ cart, removeFromCart, updateAmount }) {
+function Cart({ cart, total, removeFromCart, updateAmount }) {
   function increment(product) {
     updateAmount(product.id, product.amount + 1);
   }
@@ -74,8 +74,8 @@ function Cart({ cart, removeFromCart, updateAmount }) {
           </Products>
           <TotalContainer>
             <TotalText>TOTAL</TotalText>
-            {/* <TotalAmount>{total}</TotalAmount> */}
-            <TotalAmount>R$100,00</TotalAmount>
+            <TotalAmount>{formatPrice(total)}</TotalAmount>
+            {/* <TotalAmount>R$100,00</TotalAmount> */}
             <Order>
               <OrderText>FINALIZAR PEDIDO</OrderText>
             </Order>
