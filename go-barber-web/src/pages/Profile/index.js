@@ -1,7 +1,34 @@
 import React from 'react';
+import { Form, Input } from '@rocketseat/unform';
 
-// import { Container } from './styles';
+import { Container } from './styles';
 
 export default function Profile() {
-  return <div />;
+  return (
+    <Container>
+      <h1>PROFILE</h1>
+      <Form>
+        <Input name="name" placeholder="Nome completo" />
+        <Input name="email" type="email" placeholder="Seu endereço de e-mail" />
+
+        <hr />
+
+        <Input
+          type="password"
+          name="oldPassword"
+          placeholder="Sua senha atual"
+        />
+        <Input type="password" name="password" placeholder="Nova senha" />
+        <Input
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirmação de nova senha"
+        />
+
+        <button type="submit">Atualizar perfil</button>
+      </Form>
+
+      <button type="button">Logout</button>
+    </Container>
+  );
 }
