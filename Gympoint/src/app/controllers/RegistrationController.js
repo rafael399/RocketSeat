@@ -30,6 +30,7 @@ class RegistrationController {
         'end_date',
         'price',
         'canceled_at',
+        'active',
       ],
       order: ['id'],
     });
@@ -52,7 +53,6 @@ class RegistrationController {
       return res.status(400).json({ error: 'Validation failed' });
     }
 
-    // eslint-disable-next-line camelcase
     const { student_id, plan_id, start_date } = req.body;
 
     const student = await Student.findByPk(student_id);
