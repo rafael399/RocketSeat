@@ -33,6 +33,7 @@ module.exports = {
     ],
     'no-param-reassign': 'off',
     'no-underscore-dangle': 'off',
+    'camelcase': 'off',
     'import/prefer-default-export': 'off',
     'react/state-in-constructor': 'off',
     'react/static-property-placement': 'off',
