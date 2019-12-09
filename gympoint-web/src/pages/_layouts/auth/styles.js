@@ -41,18 +41,19 @@ export const Content = styled.div`
     label {
       display: flex;
       flex-direction: column;
+      width: 100%;
       text-align: left;
       margin-top: 20px;
       font-weight: bold;
+    }
 
-      input {
-        width: 300px;
-        height: 45px;
-        margin-top: 12px;
-        border-radius: 4px;
-        border: 1px solid #ddd;
-        padding: 0 3px 0 15px;
-      }
+    input {
+      width: 300px;
+      height: 45px;
+      margin-top: 12px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      padding: 0 3px 0 15px;
     }
 
     button {
