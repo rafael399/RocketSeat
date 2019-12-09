@@ -56,6 +56,10 @@ export const Content = styled.div`
       padding: 0 3px 0 15px;
     }
 
+    span {
+      color: #ee4d64;
+    }
+
     button {
       width: 300px;
       height: 45px;
