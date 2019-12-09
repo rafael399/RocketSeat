@@ -84,11 +84,11 @@ const registrations = await Registration.findAll({
 
 ## 🎨 Layout
 
-O layout do desafio está em anexo como um arquivo `.sketch`.
+O layout do desafio está em um arquivo `.sketch` e pode ser encontrado [nesse link](https://github.com/Rocketseat/bootcamp-gostack-desafio-09/blob/master/Gympoint.sketch).
 
 Caso esteja usando OS X / Windows você pode abrir esse arquivo com um software chamado [Zeplin](https://zeplin.io).
 
-Caso esteja no Linux ou não vá usar o Zeplin existe uma pasta chamada `Gympoint WEB` [Aqui](https://github.com/Rocketseat/bootcamp-gostack-desafio-09/tree/master/Gympoint%20WEB), baixe-a e acesse o arquivo `index.html` para visualizar as telas da aplicação.
+Caso esteja no Linux ou não vá usar o Zeplin existe uma pasta chamada `Gympoint WEB` que pode ser acessada através [desse link](https://github.com/Rocketseat/bootcamp-gostack-desafio-09/tree/master/Gympoint%20WEB), baixe-a e acesse o arquivo `index.html` para visualizar as telas da aplicação.
 
 ## 📅 Entrega
 
