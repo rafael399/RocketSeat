@@ -47,34 +47,6 @@ export const Container = styled.div`
           margin-right: 5px;
         }
       }
-
-      /* button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-left: 15px;
-
-        width: 140px;
-        height: 35px;
-
-        color: #fff;
-        background: #ee4d64;
-
-        border: none;
-        border-radius: 4px;
-
-        font-size: 14px;
-        line-height: 19px;
-        font-weight: bold;
-
-        &:hover {
-          background: ${darken(0.05, '#ee4d64')};
-        }
-
-        svg {
-          margin-right: 5px;
-        }
-      } */
     }
   }
 `;
@@ -82,7 +54,7 @@ export const Container = styled.div`
 export const Content = styled.div`
   margin-top: 20px;
   background: #fff;
-  padding: 30px 30px 5px;
+  padding: 5px 30px 30px;
   border-radius: 4px;
   position: relative;
 
@@ -93,8 +65,6 @@ export const Content = styled.div`
     input {
       height: 45px;
       padding: 15px;
-      margin-bottom: 25px;
-      margin-top: 8px;
       border: 1px solid #ddd;
       border-radius: 4px;
       color: #444;
@@ -103,9 +73,11 @@ export const Content = styled.div`
     label {
       color: #444;
       font-weight: bold;
+      padding-bottom: 8px;
+      margin-top: 25px;
     }
 
-    span {
+    div {
       display: flex;
 
       div {
@@ -149,6 +121,12 @@ export const Content = styled.div`
       svg {
         margin-right: 5px;
       }
+    }
+
+    span {
+      margin: 0;
+      color: #fb6f91;
+      font-weight: bold;
     }
   }
 `;
