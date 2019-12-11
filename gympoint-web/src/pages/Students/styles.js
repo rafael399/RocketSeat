@@ -20,7 +20,7 @@ export const Container = styled.div`
       flex-direction: row;
       align-items: center;
 
-      button {
+      a {
         display: flex;
         align-items: center;
         justify-content: center;

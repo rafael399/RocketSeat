@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { MdAddBox, MdSearch } from 'react-icons/md';
 import api from '~/services/api';
 
@@ -7,16 +8,20 @@ import { Container, Content } from './styles';
 
 export default function Students() {
   const [students, setStudents] = useState([]);
+  const [studentName, setStudentName] = useState('');
 
   useEffect(() => {
-    async function loadStudents() {
-      const response = await api.get('/students');
+    async function loadStudents(name = '') {
+      const response =
+        name === ''
+          ? await api.get('/students')
+          : await api.get(`/students/?q=${name}`);
 
       setStudents(response.data);
     }
 
-    loadStudents();
-  }, []);
+    loadStudents(studentName);
+  }, [studentName]);
 
   return (
     <Container>
@@ -24,13 +29,17 @@ export default function Students() {
         <h1>Gerenciando alunos</h1>
 
         <span>
-          <button type="button">
+          <Link to="/newStudent">
             <MdAddBox size={22} color="#fff" />
             <span>CADASTRAR</span>
-          </button>
+          </Link>
           <div>
             <MdSearch size={18} color="#999" />
-            <input type="text" placeholder="Buscar aluno" />
+            <input
+              value={studentName}
+              placeholder="Buscar aluno"
+              onChange={e => setStudentName(e.target.value)}
+            />
           </div>
         </span>
       </header>
