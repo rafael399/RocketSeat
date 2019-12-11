@@ -15,11 +15,16 @@ const schema = Yup.object().shape({
   email: Yup.string()
     .email()
     .required('O e-mail é obrigatório'),
-  age: Yup.number('A idade precisa ser um número inteiro.')
-    .integer('A idade precisa ser um número inteiro.')
+  age: Yup.number()
+    .integer()
+    .typeError('A idade precisa ser um número inteiro.')
     .required('A idade é obrigatória'),
-  weight: Yup.number().required('O peso é obrigatório'),
-  height: Yup.number().required('A altura é obrigatória'),
+  weight: Yup.number()
+    .typeError('O peso precisa ser um número com até duas casas decimais.')
+    .required('O peso é obrigatório'),
+  height: Yup.number()
+    .typeError('A altura precisa ser um número com até duas casas decimais.')
+    .required('A altura é obrigatória'),
 });
 
 export default function NewStudent() {
