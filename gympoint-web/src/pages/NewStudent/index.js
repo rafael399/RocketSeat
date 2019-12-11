@@ -7,7 +7,9 @@ import { Form, Input } from '@rocketseat/unform';
 import { Container, Content } from './styles';
 
 export default function NewStudent() {
-  function handleSubmit() {}
+  function handleSubmit(data) {
+    console.tron.log(data);
+  }
 
   return (
     <Container>
@@ -19,10 +21,10 @@ export default function NewStudent() {
             <MdArrowBack size={22} color="#fff" />
             <span>VOLTAR</span>
           </Link>
-          <button type="button">
+          {/* <button type="submit">
             <MdSave size={22} color="#fff" />
             <span>SALVAR</span>
-          </button>
+          </button> */}
         </span>
       </header>
 
@@ -46,6 +48,11 @@ export default function NewStudent() {
               <Input name="height" type="number" label="ALTURA (em metros)" />
             </div>
           </span>
+
+          <button type="submit">
+            <MdSave size={22} color="#fff" />
+            <span>SALVAR</span>
+          </button>
         </Form>
       </Content>
     </Container>

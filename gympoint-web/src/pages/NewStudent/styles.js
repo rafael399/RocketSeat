@@ -24,6 +24,7 @@ export const Container = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-right: 155px;
 
         width: 140px;
         height: 35px;
@@ -47,7 +48,7 @@ export const Container = styled.div`
         }
       }
 
-      button {
+      /* button {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -73,7 +74,7 @@ export const Container = styled.div`
         svg {
           margin-right: 5px;
         }
-      }
+      } */
     }
   }
 `;
@@ -83,6 +84,7 @@ export const Content = styled.div`
   background: #fff;
   padding: 30px 30px 5px;
   border-radius: 4px;
+  position: relative;
 
   form {
     display: flex;
@@ -114,6 +116,38 @@ export const Content = styled.div`
         &:nth-child(2) {
           margin: 0 15px;
         }
+      }
+    }
+
+    button {
+      position: absolute;
+      top: -55px;
+      right: 0px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 15px;
+
+      width: 140px;
+      height: 35px;
+
+      color: #fff;
+      background: #ee4d64;
+
+      border: none;
+      border-radius: 4px;
+
+      font-size: 14px;
+      line-height: 19px;
+      font-weight: bold;
+
+      &:hover {
+        background: ${darken(0.05, '#ee4d64')};
+      }
+
+      svg {
+        margin-right: 5px;
       }
     }
   }
