@@ -3,9 +3,16 @@ import { toast } from 'react-toastify';
 
 import api from '~/services/api';
 
-import { createStudentSuccess, createStudentFailure } from './actions';
+import {
+  createStudentSuccess,
+  createStudentFailure,
+  updateStudentSuccess,
+  updateStudentFailure,
+  deleteStudentSuccess,
+  deleteStudentFailure,
+} from './actions';
 
-export function* createUser({ payload }) {
+export function* createStudent({ payload }) {
   try {
     const { name, email, age, weight, height } = payload.data;
 
@@ -23,4 +30,42 @@ export function* createUser({ payload }) {
   }
 }
 
-export default all([takeLatest('@student/CREATE_STUDENT_REQUEST', createUser)]);
+export function* updateStudent({ payload }) {
+  try {
+    const { id, name, email, age, weight, height } = payload.data;
+
+    const newInfo = { name, email, age, weight, height };
+
+    yield call(api.put, `students/${id}`, newInfo);
+
+    toast.success('Cadastro de aluno atualizado com sucesso.');
+
+    yield put(updateStudentSuccess());
+  } catch (err) {
+    toast.error('Erro na atualização do cadastro, verifique os dados');
+
+    yield put(updateStudentFailure());
+  }
+}
+
+export function* deleteStudent({ payload }) {
+  try {
+    const { id } = payload.data;
+
+    yield call(api.delete, `students/${id}`);
+
+    toast.success('Cadastro de aluno excluído com sucesso.');
+
+    yield put(deleteStudentSuccess());
+  } catch (err) {
+    toast.error('Erro na exclusão do cadastro');
+
+    yield put(deleteStudentFailure());
+  }
+}
+
+export default all([
+  takeLatest('@student/CREATE_STUDENT_REQUEST', createStudent),
+  takeLatest('@student/UPDATE_STUDENT_REQUEST', updateStudent),
+  takeLatest('@student/DELETE_STUDENT_REQUEST', deleteStudent),
+]);

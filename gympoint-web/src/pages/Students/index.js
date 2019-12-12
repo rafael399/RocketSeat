@@ -1,14 +1,30 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdAddBox, MdSearch } from 'react-icons/md';
 import api from '~/services/api';
 
+import {
+  editStudentRequest,
+  deleteStudentRequest,
+} from '~/store/modules/student/actions';
+
 import { Container, Content } from './styles';
 
 export default function Students() {
+  const dispatch = useDispatch();
+
   const [students, setStudents] = useState([]);
   const [studentName, setStudentName] = useState('');
+
+  function handleEdit(student) {
+    dispatch(editStudentRequest(student));
+  }
+
+  function handleDelete(id) {
+    dispatch(deleteStudentRequest(id));
+  }
 
   useEffect(() => {
     async function loadStudents(name = '') {
@@ -58,10 +74,12 @@ export default function Students() {
               <td>{student.email}</td>
               <td>{student.age}</td>
               <td>
-                <Link to="/editStudent" data={student} user={student}>
+                <Link to="/editStudent" onClick={() => handleEdit(student)}>
                   editar
                 </Link>
-                <button type="button">apagar</button>
+                <button type="button" onClick={() => handleDelete(student.id)}>
+                  apagar
+                </button>
               </td>
             </tr>
           ))}
