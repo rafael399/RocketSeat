@@ -40,7 +40,7 @@ export default function StudentInfo({ title, from }) {
       case 'edit':
         dispatch(updateStudentRequest({ id: student.id, ...data }));
         break;
-      case 'register':
+      case 'newStudent':
         dispatch(createStudentRequest(data));
         break;
       default:
