@@ -112,15 +112,15 @@ export const Content = styled.div`
       &:last-child {
         text-align: right;
 
-        button {
+        a {
           font-size: 15px;
-          border: none;
           color: #4d85ee;
+        }
 
-          & + button {
-            margin-left: 25px;
-            color: #de3b3b;
-          }
+        button {
+          border: none;
+          margin-left: 25px;
+          color: #de3b3b;
         }
       }
     }

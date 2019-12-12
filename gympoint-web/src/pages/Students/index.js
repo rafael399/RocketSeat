@@ -58,7 +58,9 @@ export default function Students() {
               <td>{student.email}</td>
               <td>{student.age}</td>
               <td>
-                <button type="button">editar</button>
+                <Link to="/editStudent" data={student} user={student}>
+                  editar
+                </Link>
                 <button type="button">apagar</button>
               </td>
             </tr>
