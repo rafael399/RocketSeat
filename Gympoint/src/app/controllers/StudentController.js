@@ -94,6 +94,20 @@ class StudentController {
       height,
     });
   }
+
+  async delete(req, res) {
+    const student = await Student.findByPk(req.params.id);
+
+    if (!student) {
+      return res
+        .status(401)
+        .json({ error: 'A plan with this ID does not exist' });
+    }
+
+    await student.destroy();
+
+    return res.status(200).json({ ok: 'Plan was deleted' });
+  }
 }
 
 export default new StudentController();
