@@ -9,6 +9,9 @@ import NewStudent from '~/pages/NewStudent';
 import EditStudent from '~/pages/EditStudent';
 
 import Plans from '~/pages/Plans';
+import NewPlan from '~/pages/NewPlan';
+import EditPlan from '~/pages/EditPlan';
+
 import Registration from '~/pages/Registration';
 import HelpOrders from '~/pages/HelpOrders';
 
@@ -22,6 +25,9 @@ export default function Routes() {
       <Route path="/editStudent" component={EditStudent} isPrivate />
 
       <Route path="/plans" component={Plans} isPrivate />
+      <Route path="/newPlan" component={NewPlan} isPrivate />
+      <Route path="/editPlan" component={EditPlan} isPrivate />
+
       <Route path="/registration" component={Registration} isPrivate />
       <Route path="/help" component={HelpOrders} isPrivate />
 

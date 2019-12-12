@@ -88,6 +88,13 @@ export const Content = styled.div`
         &:nth-child(2) {
           margin: 0 15px;
         }
+
+        input {
+          &:disabled {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+          }
+        }
       }
     }
 

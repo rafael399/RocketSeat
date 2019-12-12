@@ -2,14 +2,14 @@
 import produce from 'immer';
 
 const INITIAL_STATE = {
-  student: null,
+  plan: null,
 };
 
-export default function student(state = INITIAL_STATE, action) {
+export default function plan(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
-      case '@student/EDIT_STUDENT': {
-        draft.student = action.payload.data;
+      case '@plan/EDIT_PLAN': {
+        draft.plan = action.payload.data;
         break;
       }
       default:
