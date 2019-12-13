@@ -12,6 +12,10 @@ export default function plan(state = INITIAL_STATE, action) {
         draft.plan = action.payload.data;
         break;
       }
+      case '@plan/DELETE_PLAN_REQUEST': {
+        draft.plan = null;
+        break;
+      }
       default:
         return state;
     }

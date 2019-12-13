@@ -18,6 +18,15 @@ export default function Students() {
   const [students, setStudents] = useState([]);
   const [studentName, setStudentName] = useState('');
 
+  async function loadStudents(name = '') {
+    const response =
+      name === ''
+        ? await api.get('/students')
+        : await api.get(`/students/?q=${name}`);
+
+    setStudents(response.data);
+  }
+
   function handleEdit(student) {
     dispatch(editStudentRequest(student));
   }
@@ -27,17 +36,8 @@ export default function Students() {
   }
 
   useEffect(() => {
-    async function loadStudents(name = '') {
-      const response =
-        name === ''
-          ? await api.get('/students')
-          : await api.get(`/students/?q=${name}`);
-
-      setStudents(response.data);
-    }
-
     loadStudents(studentName);
-  }, [studentName]);
+  }, [studentName, students]);
 
   return (
     <Container>

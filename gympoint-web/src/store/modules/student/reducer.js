@@ -12,6 +12,10 @@ export default function student(state = INITIAL_STATE, action) {
         draft.student = action.payload.data;
         break;
       }
+      case '@student/DELETE_STUDENT_REQUEST': {
+        draft.student = null;
+        break;
+      }
       default:
         return state;
     }

@@ -50,7 +50,7 @@ export function* updateStudent({ payload }) {
 
 export function* deleteStudent({ payload }) {
   try {
-    const { id } = payload.data;
+    const { id } = payload;
 
     yield call(api.delete, `students/${id}`);
 

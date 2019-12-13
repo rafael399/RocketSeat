@@ -48,7 +48,7 @@ export function* updatePlan({ payload }) {
 
 export function* deletePlan({ payload }) {
   try {
-    const { id } = payload.data;
+    const { id } = payload;
 
     yield call(api.delete, `plan/${id}`);
 
