@@ -1,8 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 import { isBefore, isAfter } from 'date-fns';
 
-import Student from './Student';
-
 class Registration extends Model {
   static init(sequelize) {
     super.init(
@@ -25,16 +23,6 @@ class Registration extends Model {
             );
           },
         },
-        student_name: {
-          type: Sequelize.VIRTUAL(Sequelize.STRING, [
-            'student_id',
-          ]),
-          get() {
-            return (
-              await Student.findByPk('student_id').name
-            )
-          }
-        }
       },
       {
         sequelize,

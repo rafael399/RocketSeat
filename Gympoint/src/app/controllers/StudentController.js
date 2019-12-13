@@ -104,7 +104,11 @@ class StudentController {
         .json({ error: 'A plan with this ID does not exist' });
     }
 
-    await student.destroy();
+    try {
+      await student.destroy();
+    } catch (err) {
+      console.log(err);
+    }
 
     return res.status(200).json({ ok: 'Plan was deleted' });
   }
