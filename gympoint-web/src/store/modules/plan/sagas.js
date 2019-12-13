@@ -48,11 +48,13 @@ export function* updatePlan({ payload }) {
 
 export function* deletePlan({ payload }) {
   try {
-    const { id } = payload;
+    const { id, callback } = payload;
 
     yield call(api.delete, `plan/${id}`);
 
     toast.success('Plano excluído com sucesso.');
+
+    callback();
 
     yield put(deletePlanSuccess());
   } catch (err) {

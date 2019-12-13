@@ -17,23 +17,22 @@ export default function Plans() {
 
   const [plans, setPlans] = useState([]);
 
+  function handleEdit(plan) {
+    dispatch(editPlanRequest(plan));
+  }
   async function loadPlans() {
     const response = await api.get('/plan');
 
     setPlans(response.data);
   }
 
-  function handleEdit(plan) {
-    dispatch(editPlanRequest(plan));
-  }
-
-  function handleDelete(id) {
-    dispatch(deletePlanRequest(id));
+  async function handleDelete(id) {
+    dispatch(deletePlanRequest(id, loadPlans));
   }
 
   useEffect(() => {
     loadPlans();
-  }, [plans]);
+  }, []);
 
   return (
     <Container>

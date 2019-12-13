@@ -43,10 +43,10 @@ export function updateStudentFailure() {
   };
 }
 
-export function deleteStudentRequest(id) {
+export function deleteStudentRequest(id, callback) {
   return {
     type: '@student/DELETE_STUDENT_REQUEST',
-    payload: { id },
+    payload: { id, callback },
   };
 }
 

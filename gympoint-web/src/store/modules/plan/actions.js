@@ -43,10 +43,10 @@ export function updatePlanFailure() {
   };
 }
 
-export function deletePlanRequest(id) {
+export function deletePlanRequest(id, callback) {
   return {
     type: '@plan/DELETE_PLAN_REQUEST',
-    payload: { id },
+    payload: { id, callback },
   };
 }
 

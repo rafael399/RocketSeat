@@ -32,12 +32,12 @@ export default function Students() {
   }
 
   function handleDelete(id) {
-    dispatch(deleteStudentRequest(id));
+    dispatch(deleteStudentRequest(id, loadStudents));
   }
 
   useEffect(() => {
     loadStudents(studentName);
-  }, [studentName, students]);
+  }, [studentName]);
 
   return (
     <Container>

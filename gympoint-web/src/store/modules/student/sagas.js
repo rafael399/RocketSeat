@@ -50,11 +50,13 @@ export function* updateStudent({ payload }) {
 
 export function* deleteStudent({ payload }) {
   try {
-    const { id } = payload;
+    const { id, callback } = payload;
 
     yield call(api.delete, `students/${id}`);
 
     toast.success('Cadastro de aluno excluído com sucesso.');
+
+    callback();
 
     yield put(deleteStudentSuccess());
   } catch (err) {
