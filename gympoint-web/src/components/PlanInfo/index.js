@@ -81,6 +81,7 @@ export default function PlanInfo({ title, from }) {
               <Input
                 name="duration"
                 type="number"
+                min="1"
                 label="DURAÇÃO (em meses)"
                 value={duration}
                 onChange={e => setDuration(e.target.value)}
@@ -88,9 +89,10 @@ export default function PlanInfo({ title, from }) {
             </div>
             <div>
               <Input
+                name="price"
+                min="1"
                 type="number"
                 step="0.01"
-                name="price"
                 label="PREÇO MENSAL"
                 value={price}
                 onChange={e => setPrice(e.target.value)}
