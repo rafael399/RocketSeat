@@ -33,6 +33,13 @@ class RegistrationController {
         'active',
       ],
       order: ['id'],
+      include: [
+        {
+          model: Student,
+          as: 'student',
+          attributes: ['id', 'name'],
+        },
+      ],
     });
 
     return res.json(registrations);
