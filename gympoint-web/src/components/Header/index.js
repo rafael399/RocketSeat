@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { signOut } from '~/store/modules/auth/actions';
 
@@ -10,6 +10,7 @@ import { Container, Content } from './styles';
 
 export default function Header() {
   const dispatch = useDispatch();
+  const user = useSelector(state => state.auth.user);
 
   const pathName = window.location.pathname;
   let active;
@@ -74,7 +75,7 @@ export default function Header() {
         </nav>
 
         <aside>
-          <strong>Rafael Montenegro</strong>
+          <strong>{user.name}</strong>
           <button type="button" onClick={handleSignOut}>
             sair do sistema
           </button>
