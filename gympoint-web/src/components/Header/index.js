@@ -6,6 +6,35 @@ import logo from '~/assets/logo.png';
 import { Container, Content } from './styles';
 
 export default function Header() {
+  const pathName = window.location.pathname;
+  let active;
+
+  switch (pathName) {
+    case '/students':
+    case '/newStudent':
+    case '/editStudent':
+      active = 'Student';
+      break;
+    case '/plans':
+    case '/newPlan':
+    case '/editPlan':
+      active = 'Plan';
+      break;
+    case '/registration':
+    case '/newRegistration':
+    case '/editRegistration':
+      active = 'Registration';
+      break;
+    case '/help':
+      active = 'Help';
+      break;
+    default:
+      active = '';
+      break;
+  }
+
+  console.tron.log(active);
+
   return (
     <Container>
       <Content>
@@ -16,12 +45,24 @@ export default function Header() {
           </Link>
 
           <span>
-            <Link to="/students" className="active">
+            <Link
+              to="/students"
+              className={active === 'Student' ? 'active' : ''}
+            >
               Alunos
             </Link>
-            <Link to="/plans">Planos</Link>
-            <Link to="/registration">Matrículas</Link>
-            <Link to="/help">Pedidos de Auxílio</Link>
+            <Link to="/plans" className={active === 'Plan' ? 'active' : ''}>
+              Planos
+            </Link>
+            <Link
+              to="/registration"
+              className={active === 'Registration' ? 'active' : ''}
+            >
+              Matrículas
+            </Link>
+            <Link to="/help" className={active === 'Help' ? 'active' : ''}>
+              Pedidos de Auxílio
+            </Link>
           </span>
         </nav>
 
