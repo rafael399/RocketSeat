@@ -136,6 +136,7 @@ class RegistrationController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
+      student_id: Yup.number().integer(),
       plan_id: Yup.number().integer(),
       start_date: Yup.date(),
     });
@@ -158,10 +159,20 @@ class RegistrationController {
         .json({ error: "You can't change a canceled registration" });
     }
 
-    const { plan_id, start_date } = req.body;
+    const { student_id, plan_id, start_date } = req.body;
 
-    if (!plan_id && !start_date) {
+    if (!student_id && !plan_id && !start_date) {
       return res.status(400).json({ erro: "There's no value to be updated" });
+    }
+
+    const student = student_id
+      ? await Student.findByPk(student_id)
+      : await Student.findByPk(registration.student_id);
+
+    if (student_id && !student) {
+      return res
+        .status(401)
+        .json({ error: 'A student with the given ID does not exist' });
     }
 
     const plan = plan_id
@@ -189,6 +200,7 @@ class RegistrationController {
     const { duration, price } = plan;
 
     await registration.update({
+      student_id: student_id || registration.student_id,
       plan_id: plan_id || registration.plan_id,
       start_date: start_date ? startOfDay(dateStart) : registration.start_date, // Uses startOfDay() so the student access is granted right away
       end_date: start_date
@@ -196,8 +208,6 @@ class RegistrationController {
         : endOfDay(addMonths(registration.start_date, duration)),
       price: price * duration,
     });
-
-    const student = await Student.findByPk(registration.student_id);
 
     await Queue.add(UpdateMail.key, {
       student,
