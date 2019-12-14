@@ -20,7 +20,8 @@ class Registration extends Model {
           get() {
             return (
               isBefore(this.get('start_date'), utcToZonedTime(new Date())) &&
-              isAfter(this.get('end_date'), utcToZonedTime(new Date()))
+              isAfter(this.get('end_date'), utcToZonedTime(new Date())) &&
+              this.canceled_at === null
             );
           },
         },
