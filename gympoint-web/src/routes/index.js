@@ -12,7 +12,10 @@ import Plans from '~/pages/Plans';
 import NewPlan from '~/pages/NewPlan';
 import EditPlan from '~/pages/EditPlan';
 
-import Registration from '~/pages/Registration';
+import Registrations from '~/pages/Registrations';
+import NewRegistration from '~/pages/NewRegistration';
+import EditRegistration from '~/pages/EditRegistration';
+
 import HelpOrders from '~/pages/HelpOrders';
 
 export default function Routes() {
@@ -28,7 +31,10 @@ export default function Routes() {
       <Route path="/newPlan" component={NewPlan} isPrivate />
       <Route path="/editPlan" component={EditPlan} isPrivate />
 
-      <Route path="/registration" component={Registration} isPrivate />
+      <Route path="/registration" component={Registrations} isPrivate />
+      <Route path="/newRegistration" component={NewRegistration} isPrivate />
+      <Route path="/editRegistration" component={EditRegistration} isPrivate />
+
       <Route path="/help" component={HelpOrders} isPrivate />
 
       <Route path="/" component={SignIn} />
