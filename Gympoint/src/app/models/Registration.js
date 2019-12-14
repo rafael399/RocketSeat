@@ -1,5 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 import { isBefore, isAfter } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
 
 class Registration extends Model {
   static init(sequelize) {
@@ -18,8 +19,8 @@ class Registration extends Model {
           ]),
           get() {
             return (
-              isBefore(this.get('start_date'), new Date()) &&
-              isAfter(this.get('end_date'), new Date())
+              isBefore(this.get('start_date'), utcToZonedTime(new Date())) &&
+              isAfter(this.get('end_date'), utcToZonedTime(new Date()))
             );
           },
         },
