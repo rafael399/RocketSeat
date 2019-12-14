@@ -16,6 +16,10 @@ export default function registration(state = INITIAL_STATE, action) {
         draft.registration = null;
         break;
       }
+      case '@auth/SIGN_OUT': {
+        draft.registration = null;
+        break;
+      }
       default:
         return state;
     }

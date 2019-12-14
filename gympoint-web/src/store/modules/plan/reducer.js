@@ -16,6 +16,10 @@ export default function plan(state = INITIAL_STATE, action) {
         draft.plan = null;
         break;
       }
+      case '@auth/SIGN_OUT': {
+        draft.plan = null;
+        break;
+      }
       default:
         return state;
     }

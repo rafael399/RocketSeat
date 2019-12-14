@@ -1,11 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import { signOut } from '~/store/modules/auth/actions';
 
 import logo from '~/assets/logo.png';
 
 import { Container, Content } from './styles';
 
 export default function Header() {
+  const dispatch = useDispatch();
+
   const pathName = window.location.pathname;
   let active;
 
@@ -33,7 +38,9 @@ export default function Header() {
       break;
   }
 
-  console.tron.log(active);
+  function handleSignOut() {
+    dispatch(signOut());
+  }
 
   return (
     <Container>
@@ -68,7 +75,9 @@ export default function Header() {
 
         <aside>
           <strong>Rafael Montenegro</strong>
-          <button type="button">sair do sistema</button>
+          <button type="button" onClick={handleSignOut}>
+            sair do sistema
+          </button>
         </aside>
       </Content>
     </Container>
