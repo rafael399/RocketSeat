@@ -17,13 +17,6 @@ export function createRegistrationFailure() {
   };
 }
 
-export function editRegistrationRequest(data) {
-  return {
-    type: '@registration/EDIT_REGISTRATION',
-    payload: { data },
-  };
-}
-
 export function updateRegistrationRequest(data) {
   return {
     type: '@registration/UPDATE_REGISTRATION_REQUEST',

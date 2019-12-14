@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { MdSave, MdArrowBack } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
@@ -31,8 +31,7 @@ const schema = Yup.object().shape({
     .required('A altura é obrigatória'),
 });
 
-export default function StudentInfo({ title, from }) {
-  const student = useSelector(state => state.student.student);
+export default function StudentInfo({ title, from, student }) {
   const dispatch = useDispatch();
 
   function handleSubmit(data) {
@@ -109,4 +108,9 @@ export default function StudentInfo({ title, from }) {
 StudentInfo.propTypes = {
   title: PropTypes.string.isRequired,
   from: PropTypes.string.isRequired,
+  student: PropTypes.element,
+};
+
+StudentInfo.defaultProps = {
+  student: null,
 };

@@ -17,13 +17,6 @@ export function createPlanFailure() {
   };
 }
 
-export function editPlanRequest(data) {
-  return {
-    type: '@plan/EDIT_PLAN',
-    payload: { data },
-  };
-}
-
 export function updatePlanRequest(data) {
   return {
     type: '@plan/UPDATE_PLAN_REQUEST',

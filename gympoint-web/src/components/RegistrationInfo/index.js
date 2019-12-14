@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { MdSave, MdArrowBack } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
@@ -27,8 +27,7 @@ const schema = Yup.object().shape({
     .required('O preço mensal é obrigatório'),
 });
 
-export default function RegistrationInfo({ title, from }) {
-  const registration = useSelector(state => state.registration.registration);
+export default function RegistrationInfo({ title, from, registration }) {
   const dispatch = useDispatch();
 
   // const [startDate, setStartDate] = useState(new Date());
@@ -130,4 +129,9 @@ export default function RegistrationInfo({ title, from }) {
 RegistrationInfo.propTypes = {
   title: PropTypes.string.isRequired,
   from: PropTypes.string.isRequired,
+  registration: PropTypes.element,
+};
+
+RegistrationInfo.defaultProps = {
+  registration: null,
 };

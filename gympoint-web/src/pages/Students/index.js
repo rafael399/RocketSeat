@@ -5,10 +5,7 @@ import { Link } from 'react-router-dom';
 import { MdAddBox, MdSearch } from 'react-icons/md';
 import api from '~/services/api';
 
-import {
-  editStudentRequest,
-  deleteStudentRequest,
-} from '~/store/modules/student/actions';
+import { deleteStudentRequest } from '~/store/modules/student/actions';
 
 import { Container, Content } from './styles';
 
@@ -25,10 +22,6 @@ export default function Students() {
         : await api.get(`/students/?q=${name}`);
 
     setStudents(response.data);
-  }
-
-  function handleEdit(student) {
-    dispatch(editStudentRequest(student));
   }
 
   function handleDelete(id) {
@@ -74,7 +67,14 @@ export default function Students() {
               <td>{student.email}</td>
               <td>{student.age}</td>
               <td>
-                <Link to="/editStudent" onClick={() => handleEdit(student)}>
+                <Link
+                  to={{
+                    pathname: '/editStudent',
+                    state: {
+                      student,
+                    },
+                  }}
+                >
                   editar
                 </Link>
                 <button type="button" onClick={() => handleDelete(student.id)}>

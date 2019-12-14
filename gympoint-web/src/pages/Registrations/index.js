@@ -7,10 +7,7 @@ import { Link } from 'react-router-dom';
 import { MdAddBox, MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 import api from '~/services/api';
 
-import {
-  editRegistrationRequest,
-  cancelRegistrationRequest,
-} from '~/store/modules/registration/actions';
+import { cancelRegistrationRequest } from '~/store/modules/registration/actions';
 
 import { Container, Content } from './styles';
 
@@ -43,10 +40,6 @@ export default function Registrations() {
     });
 
     setRegistrations(data);
-  }
-
-  function handleEdit(registration) {
-    dispatch(editRegistrationRequest(registration));
   }
 
   function handleCancel(id) {
@@ -95,8 +88,12 @@ export default function Registrations() {
               </td>
               <td>
                 <Link
-                  to="/editRegistration"
-                  onClick={() => handleEdit(registration)}
+                  to={{
+                    pathname: '/editRegistration',
+                    state: {
+                      registration,
+                    },
+                  }}
                 >
                   editar
                 </Link>

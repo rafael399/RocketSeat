@@ -5,10 +5,7 @@ import { Link } from 'react-router-dom';
 import { MdAddBox } from 'react-icons/md';
 import api from '~/services/api';
 
-import {
-  editPlanRequest,
-  deletePlanRequest,
-} from '~/store/modules/plan/actions';
+import { deletePlanRequest } from '~/store/modules/plan/actions';
 
 import { Container, Content } from './styles';
 
@@ -17,9 +14,6 @@ export default function Plans() {
 
   const [plans, setPlans] = useState([]);
 
-  function handleEdit(plan) {
-    dispatch(editPlanRequest(plan));
-  }
   async function loadPlans() {
     const response = await api.get('/plan');
 
@@ -63,7 +57,14 @@ export default function Plans() {
               </td>
               <td>R${plan.price}</td>
               <td>
-                <Link to="/editPlan" onClick={() => handleEdit(plan)}>
+                <Link
+                  to={{
+                    pathname: '/editPlan',
+                    state: {
+                      plan,
+                    },
+                  }}
+                >
                   editar
                 </Link>
                 <button type="button" onClick={() => handleDelete(plan.id)}>

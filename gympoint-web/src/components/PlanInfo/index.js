@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { MdSave, MdArrowBack } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
@@ -27,8 +27,7 @@ const schema = Yup.object().shape({
     .required('O preço mensal é obrigatório'),
 });
 
-export default function PlanInfo({ title, from }) {
-  const plan = useSelector(state => state.plan.plan);
+export default function PlanInfo({ title, from, plan }) {
   const dispatch = useDispatch();
 
   const [duration, setDuration] = useState(
@@ -123,4 +122,9 @@ export default function PlanInfo({ title, from }) {
 PlanInfo.propTypes = {
   title: PropTypes.string.isRequired,
   from: PropTypes.string.isRequired,
+  plan: PropTypes.element,
+};
+
+PlanInfo.defaultProps = {
+  plan: null,
 };

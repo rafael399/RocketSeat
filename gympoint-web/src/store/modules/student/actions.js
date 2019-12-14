@@ -17,13 +17,6 @@ export function createStudentFailure() {
   };
 }
 
-export function editStudentRequest(data) {
-  return {
-    type: '@student/EDIT_STUDENT',
-    payload: { data },
-  };
-}
-
 export function updateStudentRequest(data) {
   return {
     type: '@student/UPDATE_STUDENT_REQUEST',
