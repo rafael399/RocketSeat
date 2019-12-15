@@ -81,46 +81,42 @@ export const Content = styled.div`
     border-collapse: collapse;
 
     tr {
+      border: none;
       height: 50px;
 
       &:not(:last-of-type) {
         border-bottom: 1px solid #eee;
       }
 
-      &:first-of-type {
-        border: none;
-      }
-    }
+      th {
+        font-size: 16px;
+        text-align: left;
 
-    th {
-      font-size: 16px;
-      text-align: left;
-      /* padding-bottom: 10px; */
-
-      &:nth-child(3) {
-        text-align: center;
-      }
-    }
-
-    td {
-      color: #666;
-
-      &:nth-child(3) {
-        text-align: center;
+        &:nth-child(3) {
+          text-align: center;
+        }
       }
 
-      &:last-child {
-        text-align: right;
+      td {
+        color: #666;
 
-        a {
-          font-size: 15px;
-          color: #4d85ee;
+        &:nth-child(3) {
+          text-align: center;
         }
 
-        button {
-          border: none;
-          margin-left: 25px;
-          color: #de3b3b;
+        &:last-child {
+          text-align: right;
+
+          a {
+            font-size: 15px;
+            color: #4d85ee;
+          }
+
+          button {
+            border: none;
+            margin-left: 25px;
+            color: #de3b3b;
+          }
         }
       }
     }

@@ -59,34 +59,41 @@ export default function Students() {
 
       <Content>
         <table>
-          <tr>
-            <th>NOME</th>
-            <th>E-MAIL</th>
-            <th>IDADE</th>
-            <th />
-          </tr>
-          {students.map(student => (
+          <thead>
             <tr>
-              <td>{student.name}</td>
-              <td>{student.email}</td>
-              <td>{student.age}</td>
-              <td>
-                <Link
-                  to={{
-                    pathname: '/editStudent',
-                    state: {
-                      student,
-                    },
-                  }}
-                >
-                  editar
-                </Link>
-                <button type="button" onClick={() => handleDelete(student.id)}>
-                  apagar
-                </button>
-              </td>
+              <th>NOME</th>
+              <th>E-MAIL</th>
+              <th>IDADE</th>
+              <th />
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {students.map(student => (
+              <tr>
+                <td>{student.name}</td>
+                <td>{student.email}</td>
+                <td>{student.age}</td>
+                <td>
+                  <Link
+                    to={{
+                      pathname: '/editStudent',
+                      state: {
+                        student,
+                      },
+                    }}
+                  >
+                    editar
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(student.id)}
+                  >
+                    apagar
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </Content>
     </Container>

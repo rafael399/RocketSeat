@@ -71,29 +71,33 @@ export default function HelpOrders() {
 
         <Content>
           <table>
-            <tr>
-              <th>ALUNO</th>
-              <th />
-            </tr>
-            {questions.map(question => (
+            <thead>
               <tr>
-                <td>
-                  {question.student ? (
-                    question.student.name
-                  ) : (
-                    <span className="deleted">Aluno deletado</span>
-                  )}
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onClick={() => handleAnswerClick(question)}
-                  >
-                    responder
-                  </button>
-                </td>
+                <th>ALUNO</th>
+                <th />
               </tr>
-            ))}
+            </thead>
+            <tbody>
+              {questions.map(question => (
+                <tr>
+                  <td>
+                    {question.student ? (
+                      question.student.name
+                    ) : (
+                      <span className="deleted">Aluno deletado</span>
+                    )}
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      onClick={() => handleAnswerClick(question)}
+                    >
+                      responder
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </Content>
       </Container>

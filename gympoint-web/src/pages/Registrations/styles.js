@@ -66,10 +66,6 @@ export const Content = styled.div`
       &:not(:last-of-type) {
         border-bottom: 1px solid #eee;
       }
-
-      &:first-of-type {
-        border: none;
-      }
     }
 
     th {

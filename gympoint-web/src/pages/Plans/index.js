@@ -47,36 +47,40 @@ export default function Plans() {
 
       <Content>
         <table>
-          <tr>
-            <th>TÍTULO</th>
-            <th>DURAÇÃO</th>
-            <th>VALOR p/ MÊS</th>
-            <th />
-          </tr>
-          {plans.map(plan => (
+          <thead>
             <tr>
-              <td>{plan.title}</td>
-              <td>
-                {plan.duration} {plan.duration === 1 ? 'mês' : 'meses'}
-              </td>
-              <td>R${plan.price}</td>
-              <td>
-                <Link
-                  to={{
-                    pathname: '/editPlan',
-                    state: {
-                      plan,
-                    },
-                  }}
-                >
-                  editar
-                </Link>
-                <button type="button" onClick={() => handleDelete(plan.id)}>
-                  apagar
-                </button>
-              </td>
+              <th>TÍTULO</th>
+              <th>DURAÇÃO</th>
+              <th>VALOR p/ MÊS</th>
+              <th />
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {plans.map(plan => (
+              <tr>
+                <td>{plan.title}</td>
+                <td>
+                  {plan.duration} {plan.duration === 1 ? 'mês' : 'meses'}
+                </td>
+                <td>R${plan.price}</td>
+                <td>
+                  <Link
+                    to={{
+                      pathname: '/editPlan',
+                      state: {
+                        plan,
+                      },
+                    }}
+                  >
+                    editar
+                  </Link>
+                  <button type="button" onClick={() => handleDelete(plan.id)}>
+                    apagar
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </Content>
     </Container>
