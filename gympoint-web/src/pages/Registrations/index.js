@@ -29,6 +29,12 @@ export default function Registrations() {
             locale: pt,
           }
         ),
+        studentName: registration.student
+          ? registration.student.name
+          : 'Aluno Deletado',
+        planTitle: registration.plan
+          ? registration.plan.title
+          : 'Plano Deletado',
         formatedEndDate: format(
           parseISO(registration.end_date),
           "dd' de 'MMMM' de 'yyyy",
@@ -75,8 +81,20 @@ export default function Registrations() {
           </tr>
           {registrations.map(registration => (
             <tr>
-              <td>{registration.student.name}</td>
-              <td>{registration.plan.title}</td>
+              <td>
+                {registration.student ? (
+                  registration.student.name
+                ) : (
+                  <span className="deleted">Aluno deletado</span>
+                )}
+              </td>
+              <td>
+                {registration.plan ? (
+                  registration.plan.title
+                ) : (
+                  <span className="deleted">Plano deletado</span>
+                )}
+              </td>
               <td>{registration.formatedStartDate}</td>
               <td>{registration.formatedEndDate}</td>
               <td>

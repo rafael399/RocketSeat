@@ -24,6 +24,10 @@ export function* createRegistration({ payload }) {
     yield put(createRegistrationSuccess());
   } catch (err) {
     toast.error('Erro no cadastro, verifique os dados');
+    toast.error('Verifique se a data de início já passou');
+    toast.error(
+      'Verifique se o usuário já tem matrícula ativa ou a ser ativada'
+    );
 
     yield put(createRegistrationFailure());
   }

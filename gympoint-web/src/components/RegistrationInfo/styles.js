@@ -86,6 +86,15 @@ export const Content = styled.div`
         width: 25%;
         margin-right: 15px;
 
+        select {
+          height: 100%;
+          color: #444;
+          font-size: 14px;
+          line-height: 0;
+          background: #fff;
+          border: 1px solid #ddd;
+        }
+
         &:last-child {
           margin-right: 0;
         }
@@ -135,6 +144,55 @@ export const Content = styled.div`
       margin: 0;
       color: #fb6f91;
       font-weight: bold;
+    }
+  }
+`;
+
+export const Students = styled.span`
+  display: ${props => (props.visible ? 'flex' : 'none')};
+  flex-direction: column;
+  background: #fff;
+  padding: 5px 15px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border: 1px solid #ddd;
+
+  color: #fff;
+  font-size: 16px;
+
+  .student {
+    position: relative;
+    top: 0;
+    right: 0;
+
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 15px;
+    background: #fff;
+
+    color: #444;
+    font-weight: normal;
+    justify-content: left;
+
+    &:not(:first-of-type) {
+      margin-top: 5px;
+    }
+
+    &:not(:last-of-type) {
+      ::after {
+        position: absolute;
+        top: 37px;
+        left: 0px;
+        content: '';
+        height: 1px;
+        border-bottom: 1px solid #ddd;
+        width: 99%;
+        display: block;
+      }
+    }
+
+    &:hover {
+      background: ${darken(0.05, '#fff')};
     }
   }
 `;

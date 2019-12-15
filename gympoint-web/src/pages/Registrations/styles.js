@@ -89,6 +89,10 @@ export const Content = styled.div`
       color: #666;
       text-align: center;
 
+      .deleted {
+        color: red;
+      }
+
       &:first-of-type {
         text-align: left;
       }

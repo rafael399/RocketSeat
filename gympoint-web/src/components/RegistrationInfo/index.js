@@ -3,47 +3,73 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { parseISO, endOfDay, startOfDay, addMonths } from 'date-fns';
+
 import { MdSave, MdArrowBack } from 'react-icons/md';
-import { Form, Input } from '@rocketseat/unform';
+import { Form, Input, Select } from '@rocketseat/unform';
 import * as Yup from 'yup';
+import api from '~/services/api';
 
 import {
   createRegistrationRequest,
   updateRegistrationRequest,
 } from '~/store/modules/registration/actions';
 
-import { Container, Content } from './styles';
+import { Container, Content, Students } from './styles';
 
 const schema = Yup.object().shape({
-  title: Yup.string().required('O título é obrigatório'),
-  duration: Yup.number()
-    .integer()
-    .required('A duração é obrigatória')
-    .typeError('A duração precisa ser um número inteiro.'),
-  price: Yup.number()
-    .typeError(
-      'O preço mensal precisa ser um número com até duas casas decimais.'
-    )
-    .required('O preço mensal é obrigatório'),
+  studentName: Yup.string().required('O aluno é obrigatório'),
+  plan: Yup.string().required('O plano é obrigatório'),
+  startDate: Yup.string().required('A data de início é obrigatória'),
 });
 
 export default function RegistrationInfo({ title, from, registration }) {
   const dispatch = useDispatch();
+  const fromEdit = from === 'edit';
 
-  // const [startDate, setStartDate] = useState(new Date());
+  function formatDate(date) {
+    return parseISO(date)
+      .toISOString()
+      .substr(0, 10);
+  }
 
-  // const [plan, setPlan] = useState(
-  //   registration && from === 'edit' ? registration.duration : null
-  // );
-  // const [price, setPrice] = useState(
-  //   registration && from === 'edit' ? registration.price : null
-  // );
-  // const [totalPrice, setTotalPrice] = useState(duration * price);
+  const [showStudentList, setShowStudentList] = useState(false);
 
-  function handleSubmit(data) {
+  const [students, setStudents] = useState([]);
+  const [student, setStudent] = useState(
+    fromEdit ? registration.student : null
+  );
+  const [searchName, setSearchName] = useState(fromEdit ? student.name : '');
+
+  const [plans, setPlans] = useState([]);
+  const [plan, setPlan] = useState(fromEdit ? registration.plan : null);
+
+  const [startDate, setStartDate] = useState(
+    fromEdit
+      ? formatDate(registration.start_date)
+      : new Date().toISOString().substr(0, 10)
+  );
+  const [endDate, setEndDate] = useState(
+    fromEdit ? formatDate(registration.end_date) : startDate
+  );
+
+  const [totalPrice, setTotalPrice] = useState(
+    fromEdit ? plan.duration * plan.price : 0
+  );
+
+  function handleSubmit() {
+    const data = {
+      id: registration ? registration.id : null,
+      student_id: student.id,
+      plan_id: plan.id,
+      start_date: startOfDay(parseISO(startDate))
+        .toISOString()
+        .substr(0, 10),
+    };
+
     switch (from) {
       case 'edit':
-        dispatch(updateRegistrationRequest({ id: registration.id, ...data }));
+        dispatch(updateRegistrationRequest(data));
         break;
       case 'newRegistration':
         dispatch(createRegistrationRequest(data));
@@ -53,9 +79,58 @@ export default function RegistrationInfo({ title, from, registration }) {
     }
   }
 
-  // useEffect(() => {
-  //   setTotalPrice(duration * price);
-  // }, [duration, price]);
+  function handleStudentSelect(s) {
+    setStudent(s);
+    setShowStudentList(false);
+  }
+
+  function handleChangePlan(e) {
+    setPlan(plans.find(p => p.id === parseInt(e.target.value, 10)));
+  }
+
+  async function loadStudents(name) {
+    const response =
+      name === ''
+        ? await api.get('/students')
+        : await api.get(`/students/?q=${name}`);
+
+    setStudents(response.data);
+  }
+
+  useEffect(() => {
+    async function loadPlans() {
+      const response = await api.get('/plan');
+
+      setPlans(response.data);
+    }
+
+    loadPlans();
+    loadStudents();
+  }, []);
+
+  useEffect(() => {
+    setTotalPrice(plan ? plan.duration * plan.price : 0);
+    if (startDate !== null && plan !== null) {
+      const formatedStart = endOfDay(parseISO(startDate));
+      const formatedEnd = endOfDay(addMonths(formatedStart, plan.duration))
+        .toISOString()
+        .substr(0, 10);
+
+      setEndDate(formatedEnd);
+    }
+  }, [plan, startDate]);
+
+  useEffect(() => {
+    if (student === null || searchName !== student.name)
+      setShowStudentList(true);
+    loadStudents(searchName);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchName]);
+
+  useEffect(() => {
+    if (student) setSearchName(student.name);
+  }, [student]);
 
   return (
     <Container>
@@ -74,17 +149,36 @@ export default function RegistrationInfo({ title, from, registration }) {
         <Form
           onSubmit={handleSubmit}
           schema={schema}
-          // initialData={from === 'edit' ? plan : null}
+          initialData={from === 'edit' ? registration : null}
         >
-          <Input name="student" label="ALUNO" />
+          <Input
+            name="studentName"
+            label="ALUNO"
+            placeholder="Buscar aluno"
+            value={searchName}
+            onChange={e => setSearchName(e.target.value)}
+          />
+          <Students visible={showStudentList} className="ss">
+            {students.map(s => (
+              <button
+                className="student"
+                type="button"
+                onClick={() => handleStudentSelect(s)}
+                key={s.id}
+              >
+                {s.name}
+              </button>
+            ))}
+          </Students>
           <div>
             <div>
-              <Input
+              <Select
                 name="plan"
-                type="check"
                 label="PLANO"
-                // value={duration}
-                // onChange={e => setDuration(e.target.value)}
+                options={plans}
+                select={plan}
+                onChange={e => handleChangePlan(e)}
+                placeholder="Selecione o plano"
               />
             </div>
             <div>
@@ -92,7 +186,9 @@ export default function RegistrationInfo({ title, from, registration }) {
                 name="startDate"
                 type="date"
                 label="DATA DE INÍCIO"
-                // onChange={e => setDuration(e.target.value)}
+                value={startDate}
+                onChange={e => setStartDate(e.target.value)}
+                placeholder="Escolha a data"
               />
             </div>
             <div>
@@ -100,7 +196,7 @@ export default function RegistrationInfo({ title, from, registration }) {
                 name="endDate"
                 type="date"
                 label="DATA DE TÉRMINO"
-                // value={totalPrice}
+                value={endDate}
                 disabled
               />
             </div>
@@ -110,7 +206,7 @@ export default function RegistrationInfo({ title, from, registration }) {
                 type="number"
                 step="0.01"
                 label="VALOR FINAL"
-                // value={totalPrice}
+                value={totalPrice}
                 disabled
               />
             </div>
