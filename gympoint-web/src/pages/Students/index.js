@@ -25,7 +25,11 @@ export default function Students() {
   }
 
   function handleDelete(id) {
-    dispatch(deleteStudentRequest(id, loadStudents));
+    const result = window.confirm('Tem certeza disso?');
+
+    if (result === true) {
+      dispatch(deleteStudentRequest(id, loadStudents));
+    }
   }
 
   useEffect(() => {

@@ -49,7 +49,11 @@ export default function Registrations() {
   }
 
   function handleCancel(id) {
-    dispatch(cancelRegistrationRequest(id, loadRegistrations));
+    const result = window.confirm('Tem certeza disso?');
+
+    if (result === true) {
+      dispatch(cancelRegistrationRequest(id, loadRegistrations));
+    }
   }
 
   useEffect(() => {

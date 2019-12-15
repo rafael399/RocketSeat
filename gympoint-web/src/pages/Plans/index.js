@@ -21,7 +21,11 @@ export default function Plans() {
   }
 
   async function handleDelete(id) {
-    dispatch(deletePlanRequest(id, loadPlans));
+    const result = window.confirm('Tem certeza disso?');
+
+    if (result === true) {
+      dispatch(deletePlanRequest(id, loadPlans));
+    }
   }
 
   useEffect(() => {
