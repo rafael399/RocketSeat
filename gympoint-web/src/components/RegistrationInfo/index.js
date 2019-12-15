@@ -39,7 +39,9 @@ export default function RegistrationInfo({ title, from, registration }) {
   const [student, setStudent] = useState(
     fromEdit ? registration.student : null
   );
-  const [searchName, setSearchName] = useState(fromEdit ? student.name : '');
+  const [searchName, setSearchName] = useState(
+    fromEdit && student ? student.name : ''
+  );
 
   const [plans, setPlans] = useState([]);
   const [plan, setPlan] = useState(fromEdit ? registration.plan : null);
@@ -54,7 +56,7 @@ export default function RegistrationInfo({ title, from, registration }) {
   );
 
   const [totalPrice, setTotalPrice] = useState(
-    fromEdit ? plan.duration * plan.price : 0
+    fromEdit && plan ? plan.duration * plan.price : 0
   );
 
   function handleSubmit() {
