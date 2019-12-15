@@ -12,6 +12,13 @@ class AdmHelpOrderController {
       where: { answer: null },
       attributes: ['id', 'student_id', 'question', 'created_at'],
       order: ['id'],
+      include: [
+        {
+          model: Student,
+          as: 'student',
+          attributes: ['id', 'name'],
+        },
+      ],
     });
 
     return res.json(helpOrders);
