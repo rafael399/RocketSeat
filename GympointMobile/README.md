@@ -1,7 +1,7 @@
 Pego de: <a href="https://github.com/Rocketseat/bootcamp-gostack-desafio-10/blob/master/README.md">RocketSeat Desafio 10</a>
 
 <h1 align="center">
-  <img alt="Gympoint" title="Gympoint" src=".github/logo.png" width="200px" />
+  <img alt="Gympoint" title="Gympoint" src="https://github.com/Rocketseat/bootcamp-gostack-desafio-10/blob/master/.github/logo.png" width="200px" />
 </h1>
 
 <h3 align="center">
