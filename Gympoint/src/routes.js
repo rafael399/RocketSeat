@@ -6,6 +6,7 @@ import RegistrationController from './app/controllers/RegistrationController';
 import CheckinController from './app/controllers/CheckinController';
 import AdmHelpOrderController from './app/controllers/AdmHelpOrderController';
 import StudentHelpOrderController from './app/controllers/StudentHelpOrderController';
+import StudentLoginController from './app/controllers/StudentLoginController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -23,6 +24,7 @@ routes.get(
   '/students/:student_id/help-orders',
   StudentHelpOrderController.index
 );
+routes.get('/students/:student_id', StudentLoginController.index);
 
 routes.use(authMiddleware);
 
