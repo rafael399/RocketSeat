@@ -6,6 +6,12 @@ class StudentLoginController {
 
     const student = await Student.findByPk(student_id);
 
+    if (!student) {
+      return res
+        .status(401)
+        .json({ error: 'A student with the given ID does not exist' });
+    }
+
     return res.json(student);
   }
 }
