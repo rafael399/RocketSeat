@@ -4,16 +4,15 @@ import { StatusBar } from 'react-native';
 
 import './config/ReactotronConfig';
 
-import Routes from './routes';
-
 import { store } from './store';
+import App from './App';
 
-export default function App() {
+export default function Index() {
   return (
     <>
       <Provider store={store}>
         <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-        <Routes />
+        <App />
       </Provider>
     </>
   );
