@@ -12,6 +12,6 @@ export default function HelpOrder() {
 HelpOrder.navigationOptions = {
   tabBarLabel: 'Pedir ajuda',
   tabBarIcon: ({ tintColor }) => (
-    <Icon name="help" size={20} color={tintColor} />
+    <Icon name="help" size={22} color={tintColor} />
   ),
 };
