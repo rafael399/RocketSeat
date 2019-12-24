@@ -12,7 +12,7 @@ class CheckinController {
     const checkins = await Checkin.findAll({
       where: { student_id },
       attributes: ['id', 'student_id', 'created_at', 'formated_date'],
-      order: ['id'],
+      order: [['id', 'DESC']],
     });
 
     return res.json(checkins);
