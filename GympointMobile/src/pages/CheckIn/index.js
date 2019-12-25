@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Alert } from 'react-native';
+import { useSelector } from 'react-redux';
+import { parseISO, formatDistanceToNow } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import api from '~/services/api';
 
 import Background from '~/components/Background';
 import Header from '~/components/Header';
@@ -18,78 +24,49 @@ import {
 
 export default function CheckIn() {
   const [checkIns, setCheckIns] = useState([]);
+  const studentId = useSelector(state => state.student.student.id);
+
+  async function loadCheckIns() {
+    const response = await api.get(`students/${studentId}/checkins`);
+
+    const checkins = response.data.map(checkin => {
+      return {
+        ...checkin,
+        date: formatDistanceToNow(parseISO(checkin.created_at), {
+          locale: pt,
+          addSuffix: true,
+          includeSeconds: true,
+        }),
+      };
+    });
+
+    setCheckIns(checkins);
+  }
 
   useEffect(() => {
-    const checks = [
-      {
-        id: 1,
-        check: 'check 1',
-        date: 'data1',
-      },
-      {
-        id: 2,
-        check: 'check 1',
-        date: 'data1',
-      },
-      {
-        id: 3,
-        check: 'check 1',
-        date: 'data1',
-      },
-      {
-        id: 4,
-        check: 'check 1',
-        date: 'data1',
-      },
-      {
-        id: 5,
-        check: 'check 1',
-        date: 'data1',
-      },
-      {
-        id: 6,
-        check: 'check 1',
-        date: 'data1',
-      },
-      {
-        id: 7,
-        check: 'check 1',
-        date: 'data1',
-      },
-      {
-        id: 8,
-        check: 'check 1',
-        date: 'data1',
-      },
-      {
-        id: 9,
-        check: 'check 1',
-        date: 'data1',
-      },
-      {
-        id: 10,
-        check: 'check 1',
-        date: 'data1',
-      },
-      {
-        id: 11,
-        check: 'check 1',
-        date: 'data1',
-      },
-      {
-        id: 12,
-        check: 'check 1',
-        date: 'data1',
-      },
-      {
-        id: 13,
-        check: 'check 1',
-        date: 'data1',
-      },
-    ];
+    loadCheckIns();
 
-    setCheckIns(checks);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  function handleNewCheckIn() {
+    async function checkIn() {
+      try {
+        await api.post(`students/${studentId}/checkins`);
+
+        loadCheckIns();
+
+        Alert.alert('Sucesso', 'Check-in realizado com sucesso');
+      } catch (err) {
+        Alert.alert(
+          'Falha',
+          'O check-in não pôde ser realizado. Verifique se você já fez 5 check-ins nos últimos 7 dias'
+        );
+      }
+    }
+
+    checkIn();
+  }
 
   return (
     <Background>
@@ -97,14 +74,14 @@ export default function CheckIn() {
         <Header />
 
         <Content>
-          <Button onPress={() => {}}>Novo check-in</Button>
+          <Button onPress={handleNewCheckIn}>Novo check-in</Button>
 
           <CheckInList
             data={checkIns}
             keyExtractor={item => String(item.id)}
             renderItem={({ item }) => (
               <CheckInItem>
-                <CheckInTitle>{item.check}</CheckInTitle>
+                <CheckInTitle>Check-in #{item.id}</CheckInTitle>
                 <CheckInDate>{item.date}</CheckInDate>
               </CheckInItem>
             )}

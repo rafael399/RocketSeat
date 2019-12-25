@@ -11,11 +11,11 @@ export const Content = styled.View`
 export const CheckInList = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
-    paddingTop: 30,
     paddingBottom: 30,
   },
 })`
   margin-bottom: 30px;
+  margin-top: 20px;
 `;
 
 export const CheckInItem = styled.View`
