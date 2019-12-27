@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { parseISO, formatDistanceToNow } from 'date-fns';
 import pt from 'date-fns/locale/pt';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { withNavigationFocus } from 'react-navigation';
 
 import api from '~/services/api';
 
@@ -24,31 +24,33 @@ import {
   HelpOrderDescription,
 } from './styles';
 
-export default function Orders({ navigation }) {
+function Orders({ navigation, isFocused }) {
   const [orders, setOrders] = useState([]);
   const studentId = useSelector(state => state.student.student.id);
 
+  async function loadHelpOrders() {
+    const response = await api.get(`/students/${studentId}/help-orders`);
+
+    const helpOrders = response.data.map(helpOrder => {
+      return {
+        ...helpOrder,
+        answered: helpOrder.answered_at !== null,
+        date: formatDistanceToNow(parseISO(helpOrder.created_at), {
+          locale: pt,
+          addSuffix: true,
+          includeSeconds: true,
+        }),
+      };
+    });
+
+    setOrders(helpOrders);
+  }
+
   useEffect(() => {
-    async function loadHelpOrders() {
-      const response = await api.get(`/students/${studentId}/help-orders`);
-
-      const helpOrders = response.data.map(helpOrder => {
-        return {
-          ...helpOrder,
-          answered: helpOrder.answered_at !== null,
-          date: formatDistanceToNow(parseISO(helpOrder.created_at), {
-            locale: pt,
-            addSuffix: true,
-            includeSeconds: true,
-          }),
-        };
-      });
-
-      setOrders(helpOrders);
+    if (isFocused) {
+      loadHelpOrders();
     }
-
-    loadHelpOrders();
-  }, [studentId]);
+  }, [isFocused]);
 
   return (
     <Background>
@@ -96,3 +98,5 @@ export default function Orders({ navigation }) {
     </Background>
   );
 }
+
+export default withNavigationFocus(Orders);
