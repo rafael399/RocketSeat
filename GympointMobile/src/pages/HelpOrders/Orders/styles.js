@@ -1,3 +1,4 @@
+import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
@@ -18,7 +19,8 @@ export const HelpOrderList = styled.FlatList.attrs({
   margin-top: 20px;
 `;
 
-export const HelpOrderItem = styled.View`
+// export const HelpOrderItem = styled.View`
+export const HelpOrderItem = styled(TouchableOpacity)`
   flex-direction: column;
 
   padding: 20px;

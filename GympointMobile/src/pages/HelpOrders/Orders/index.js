@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
-// import { TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { parseISO, formatDistanceToNow } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import api from '~/services/api';
 
 import Background from '~/components/Background';
 import Header from '~/components/Header';
@@ -20,25 +24,31 @@ import {
   HelpOrderDescription,
 } from './styles';
 
-export default function Orders() {
-  const [orders, setOrders] = useState([
-    {
-      id: 1,
-      answered: true,
-      date: 'Hoje as 14h',
-      desc:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur veniam modi non pariatur, porro, unde similique, sequi a voluptas ea obcaecati quas delectus fuga repudiandae excepturi eveniet blanditiis explicabo dolorem?',
-    },
-    {
-      id: 2,
-      answered: false,
-      date: 'Hoje as 14h',
-      desc:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur veniam modi non pariatur, porro, unde similique, sequi a voluptas ea obcaecati quas delectus fuga repudiandae excepturi eveniet blanditiis explicabo dolorem?',
-    },
-  ]);
+export default function Orders({ navigation }) {
+  const [orders, setOrders] = useState([]);
+  const studentId = useSelector(state => state.student.student.id);
 
-  function handleNewHelpOrder() {}
+  useEffect(() => {
+    async function loadHelpOrders() {
+      const response = await api.get(`/students/${studentId}/help-orders`);
+
+      const helpOrders = response.data.map(helpOrder => {
+        return {
+          ...helpOrder,
+          answered: helpOrder.answered_at !== null,
+          date: formatDistanceToNow(parseISO(helpOrder.created_at), {
+            locale: pt,
+            addSuffix: true,
+            includeSeconds: true,
+          }),
+        };
+      });
+
+      setOrders(helpOrders);
+    }
+
+    loadHelpOrders();
+  }, [studentId]);
 
   return (
     <Background>
@@ -46,13 +56,16 @@ export default function Orders() {
         <Header />
 
         <Content>
-          <Button onPress={handleNewHelpOrder}>Novo pedido de auxílio</Button>
+          <Button onPress={() => navigation.navigate('NewOrder')}>
+            Novo pedido de auxílio
+          </Button>
 
           <HelpOrderList
             data={orders}
             keyExtractor={item => String(item.id)}
             renderItem={({ item }) => (
-              <HelpOrderItem>
+              <HelpOrderItem
+                onPress={() => navigation.navigate('AnsweredOrder', { item })}>
                 <HelpOrderHeader>
                   <HelpOrderTitle>
                     <Icon
@@ -69,7 +82,7 @@ export default function Orders() {
                   <HelpOrderDate>{item.date}</HelpOrderDate>
                 </HelpOrderHeader>
                 <HelpOrderDescription numberOfLines={3}>
-                  {item.desc}
+                  {item.question}
                 </HelpOrderDescription>
               </HelpOrderItem>
             )}
