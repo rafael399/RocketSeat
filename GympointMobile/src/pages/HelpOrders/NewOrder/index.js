@@ -22,7 +22,7 @@ NewOrder.navigationOptions = ({ navigation }) => ({
   headerLeft: () => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate('Orders');
+        navigation.goBack();
       }}>
       <Icon name="chevron-left" size={30} color="#EE4E62" />
     </TouchableOpacity>

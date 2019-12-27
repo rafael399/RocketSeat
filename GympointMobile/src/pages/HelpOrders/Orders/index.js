@@ -62,27 +62,31 @@ export default function Orders({ navigation }) {
 
           <HelpOrderList
             data={orders}
-            keyExtractor={item => String(item.id)}
-            renderItem={({ item }) => (
+            keyExtractor={helpOrder => String(helpOrder.id)}
+            renderItem={({ item: helpOrder }) => (
               <HelpOrderItem
-                onPress={() => navigation.navigate('AnsweredOrder', { item })}>
+                onPress={() =>
+                  navigation.navigate('AnsweredOrder', { helpOrder })
+                }>
                 <HelpOrderHeader>
                   <HelpOrderTitle>
                     <Icon
                       name={
-                        item.answered ? 'check-box' : 'check-box-outline-blank'
+                        helpOrder.answered
+                          ? 'check-box'
+                          : 'check-box-outline-blank'
                       }
                       size={22}
-                      color={item.answered ? '#42CB59' : '#999'}
+                      color={helpOrder.answered ? '#42CB59' : '#999'}
                     />
-                    <OrderAnswered answered={item.answered}>
-                      {item.answered ? 'Respondido' : 'Sem Resposta'}
+                    <OrderAnswered answered={helpOrder.answered}>
+                      {helpOrder.answered ? 'Respondido' : 'Sem Resposta'}
                     </OrderAnswered>
                   </HelpOrderTitle>
-                  <HelpOrderDate>{item.date}</HelpOrderDate>
+                  <HelpOrderDate>{helpOrder.date}</HelpOrderDate>
                 </HelpOrderHeader>
                 <HelpOrderDescription numberOfLines={3}>
-                  {item.question}
+                  {helpOrder.question}
                 </HelpOrderDescription>
               </HelpOrderItem>
             )}

@@ -19,7 +19,6 @@ export const HelpOrderList = styled.FlatList.attrs({
   margin-top: 20px;
 `;
 
-// export const HelpOrderItem = styled.View`
 export const HelpOrderItem = styled(TouchableOpacity)`
   flex-direction: column;
 
