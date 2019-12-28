@@ -36,6 +36,7 @@ export const AnswerBox = styled.div`
       height: 100px;
       margin-top: 10px;
       margin-bottom: 25px;
+      word-wrap: break-word;
     }
 
     div {
