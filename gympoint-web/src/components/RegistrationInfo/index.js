@@ -2,18 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { parseISO, endOfDay, startOfDay, addMonths } from 'date-fns';
 
 import { MdSave, MdArrowBack } from 'react-icons/md';
 import { Form, Input, Select } from '@rocketseat/unform';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 import api from '~/services/api';
-
-import {
-  createRegistrationRequest,
-  updateRegistrationRequest,
-} from '~/store/modules/registration/actions';
 
 import { Container, Content, Students } from './styles';
 
@@ -24,7 +19,7 @@ const schema = Yup.object().shape({
 });
 
 export default function RegistrationInfo({ title, from, registration }) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const fromEdit = from === 'edit';
 
   function formatDate(date) {
@@ -59,7 +54,7 @@ export default function RegistrationInfo({ title, from, registration }) {
     fromEdit && plan ? plan.duration * plan.price : 0
   );
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const data = {
       id: registration ? registration.id : null,
       student_id: student.id,
@@ -69,15 +64,42 @@ export default function RegistrationInfo({ title, from, registration }) {
         .substr(0, 10),
     };
 
-    switch (from) {
-      case 'edit':
-        dispatch(updateRegistrationRequest(data));
-        break;
-      case 'newRegistration':
-        dispatch(createRegistrationRequest(data));
-        break;
-      default:
-        break;
+    if (from === 'edit') {
+      try {
+        try {
+          const newInfo = {
+            student_id: data.student_id,
+            plan_id: data.plan_id,
+            start_date: data.start_date,
+          };
+
+          await api.put(`registration/${data.id}`, newInfo);
+
+          toast.success('Matrícula atualizada com sucesso.');
+        } catch (err) {
+          toast.error('Erro na atualização da matrícula, verifique os dados');
+        }
+      } catch (err) {
+        toast.error('Erro na atualização do cadastro, verifique os dados');
+      }
+    } else if (from === 'newRegistration') {
+      try {
+        const newRegistration = {
+          student_id: data.student_id,
+          plan_id: data.plan_id,
+          start_date: data.start_date,
+        };
+
+        await api.post('registration', newRegistration);
+
+        toast.success('Matrícula efetuada com sucesso.');
+      } catch (err) {
+        toast.error('Erro no cadastro, verifique os dados');
+        toast.error('Verifique se a data de início já passou');
+        toast.error(
+          'Verifique se o usuário já tem matrícula ativa ou a ser ativada'
+        );
+      }
     }
   }
 
@@ -160,7 +182,7 @@ export default function RegistrationInfo({ title, from, registration }) {
             value={searchName}
             onChange={e => setSearchName(e.target.value)}
           />
-          <Students visible={showStudentList} className="ss">
+          <Students visible={showStudentList}>
             {students.map(s => (
               <button
                 className="student"

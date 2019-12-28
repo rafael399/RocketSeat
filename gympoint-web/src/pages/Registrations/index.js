@@ -2,18 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdAddBox, MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
+import { toast } from 'react-toastify';
 import api from '~/services/api';
-
-import { cancelRegistrationRequest } from '~/store/modules/registration/actions';
 
 import { Container, Content } from './styles';
 
 export default function Registrations() {
-  const dispatch = useDispatch();
-
   const [registrations, setRegistrations] = useState([]);
 
   async function loadRegistrations() {
@@ -48,11 +44,19 @@ export default function Registrations() {
     setRegistrations(data);
   }
 
-  function handleCancel(id) {
+  async function handleCancel(id) {
     const result = window.confirm('Tem certeza disso?');
 
     if (result === true) {
-      dispatch(cancelRegistrationRequest(id, loadRegistrations));
+      try {
+        await api.delete(`registration/${id}`);
+
+        toast.success('Matrícula cancelada com sucesso.');
+
+        loadRegistrations();
+      } catch (err) {
+        toast.error('Erro no cancelamento da matrícula');
+      }
     }
   }
 

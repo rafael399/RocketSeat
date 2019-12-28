@@ -1,17 +1,13 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdAddBox, MdSearch } from 'react-icons/md';
+import { toast } from 'react-toastify';
 import api from '~/services/api';
-
-import { deleteStudentRequest } from '~/store/modules/student/actions';
 
 import { Container, Content } from './styles';
 
 export default function Students() {
-  const dispatch = useDispatch();
-
   const [students, setStudents] = useState([]);
   const [studentName, setStudentName] = useState('');
 
@@ -24,11 +20,19 @@ export default function Students() {
     setStudents(response.data);
   }
 
-  function handleDelete(id) {
+  async function handleDelete(id) {
     const result = window.confirm('Tem certeza disso?');
 
     if (result === true) {
-      dispatch(deleteStudentRequest(id, loadStudents));
+      try {
+        await api.delete(`students/${id}`);
+
+        toast.success('Cadastro de aluno excluído com sucesso.');
+
+        loadStudents();
+      } catch (err) {
+        toast.error('Erro na exclusão do cadastro');
+      }
     }
   }
 

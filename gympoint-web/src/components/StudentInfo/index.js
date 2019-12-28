@@ -2,15 +2,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { MdSave, MdArrowBack } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 
-import {
-  createStudentRequest,
-  updateStudentRequest,
-} from '~/store/modules/student/actions';
+import api from '~/services/api';
 
 import { Container, Content } from './styles';
 
@@ -32,18 +29,41 @@ const schema = Yup.object().shape({
 });
 
 export default function StudentInfo({ title, from, student }) {
-  const dispatch = useDispatch();
+  async function handleSubmit(data, { resetForm }) {
+    if (from === 'edit') {
+      try {
+        const newInfo = {
+          name: data.name,
+          email: data.email,
+          age: data.age,
+          weight: data.weight,
+          height: data.height,
+        };
 
-  function handleSubmit(data) {
-    switch (from) {
-      case 'edit':
-        dispatch(updateStudentRequest({ id: student.id, ...data }));
-        break;
-      case 'newStudent':
-        dispatch(createStudentRequest(data));
-        break;
-      default:
-        break;
+        await api.put(`students/${student.id}`, newInfo);
+
+        toast.success('Cadastro de aluno atualizado com sucesso.');
+      } catch (err) {
+        toast.error('Erro na atualização do cadastro, verifique os dados');
+      }
+    } else if (from === 'newStudent') {
+      try {
+        const newStudent = {
+          name: data.name,
+          email: data.email,
+          age: data.age,
+          weight: data.weight,
+          height: data.height,
+        };
+
+        await api.post('students', newStudent);
+
+        toast.success('Aluno cadastrado com sucesso.');
+
+        resetForm();
+      } catch (err) {
+        toast.error('Erro no cadastro, verifique os dados');
+      }
     }
   }
 

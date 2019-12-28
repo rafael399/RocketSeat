@@ -1,17 +1,13 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdAddBox } from 'react-icons/md';
+import { toast } from 'react-toastify';
 import api from '~/services/api';
-
-import { deletePlanRequest } from '~/store/modules/plan/actions';
 
 import { Container, Content } from './styles';
 
 export default function Plans() {
-  const dispatch = useDispatch();
-
   const [plans, setPlans] = useState([]);
 
   async function loadPlans() {
@@ -24,7 +20,15 @@ export default function Plans() {
     const result = window.confirm('Tem certeza disso?');
 
     if (result === true) {
-      dispatch(deletePlanRequest(id, loadPlans));
+      try {
+        await api.delete(`plan/${id}`);
+
+        toast.success('Plano excluído com sucesso.');
+
+        loadPlans();
+      } catch (err) {
+        toast.error('Erro na exclusão do cadastro');
+      }
     }
   }
 

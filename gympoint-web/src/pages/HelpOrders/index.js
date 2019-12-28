@@ -2,17 +2,13 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { Input } from '@rocketseat/unform';
+import { toast } from 'react-toastify';
 import api from '~/services/api';
-
-import { answerQuestionRequest } from '~/store/modules/helpOrder/actions';
 
 import { AnswerBox, Container, Content } from './styles';
 
 export default function HelpOrders() {
-  const dispatch = useDispatch();
-
   const [visible, setVisible] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [helpQuestion, setHelpQuestion] = useState({});
@@ -30,10 +26,20 @@ export default function HelpOrders() {
     setVisible(true);
   }
 
-  function handleAnswer(id) {
-    dispatch(answerQuestionRequest(id, answer, setVisible, loadHelpOrders));
+  async function handleAnswer(id) {
+    try {
+      const answerInfo = { answer };
 
-    // setVisible(false);
+      await api.post(`/help-orders/${id}/answer`, answerInfo);
+
+      toast.success('Pergunta respondida.');
+
+      setVisible(false);
+
+      loadHelpOrders();
+    } catch (err) {
+      toast.error('Erro ao responder pergunta, verifique os dados');
+    }
   }
 
   useEffect(() => {

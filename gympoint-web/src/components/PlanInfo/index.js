@@ -2,15 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { MdSave, MdArrowBack } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 
-import {
-  createPlanRequest,
-  updatePlanRequest,
-} from '~/store/modules/plan/actions';
+import api from '~/services/api';
 
 import { Container, Content } from './styles';
 
@@ -28,7 +25,7 @@ const schema = Yup.object().shape({
 });
 
 export default function PlanInfo({ title, from, plan }) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [duration, setDuration] = useState(
     plan && from === 'edit' ? plan.duration : null
@@ -38,16 +35,37 @@ export default function PlanInfo({ title, from, plan }) {
   );
   const [totalPrice, setTotalPrice] = useState(duration * price);
 
-  function handleSubmit(data) {
-    switch (from) {
-      case 'edit':
-        dispatch(updatePlanRequest({ id: plan.id, ...data }));
-        break;
-      case 'newPlan':
-        dispatch(createPlanRequest(data));
-        break;
-      default:
-        break;
+  async function handleSubmit(data, { resetForm }) {
+    if (from === 'edit') {
+      try {
+        const newInfo = {
+          title: data.title,
+          duration: data.duration,
+          price: data.price,
+        };
+
+        await api.put(`plan/${plan.id}`, newInfo);
+
+        toast.success('Cadastro de plano atualizado com sucesso.');
+      } catch (err) {
+        toast.error('Erro na atualização do cadastro, verifique os dados');
+      }
+    } else if (from === 'newPlan') {
+      try {
+        const newPlan = {
+          title: data.title,
+          duration: data.duration,
+          price: data.price,
+        };
+
+        await api.post('plan', newPlan);
+
+        toast.success('Plano cadastrado com sucesso.');
+
+        resetForm();
+      } catch (err) {
+        toast.error('Erro no cadastro, verifique os dados');
+      }
     }
   }
 
